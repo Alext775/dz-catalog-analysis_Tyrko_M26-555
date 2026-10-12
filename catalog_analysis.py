@@ -234,3 +234,32 @@ def demonstrate_generators(movies):
         movie["duration_min"] for movie in movies if movie["rating"] > 7
     )
     print("Общая длительность фильмов с рейтингом выше 7:", total_duration)
+
+
+# Этап 9. Итоговый отчёт
+def build_report(movies):
+    _, _, average_age = catalog_age_stats(movies)
+
+    print("ОТЧеТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг: {average_rating(movies)}")
+    print(f"Средний возраст фильмов: {average_age} лет")
+
+    print("\nТоп-3 фильма:")
+    top_movies = sorted(
+        movies, key=lambda movie: movie["rating"], reverse=True
+    )[:3]
+    for movie in top_movies:
+        print(format_report_line(movie))
+
+    print("\nФильмов по жанрам:")
+    genre_counts = sorted(
+        count_by_genre(movies).items(), key=lambda item: (-item[1], item[0])
+    )
+    for genre, count in genre_counts:
+        print(f"  {genre} — {count}")
+
+    print("\nВсе жанры каталога: " + ", ".join(sorted(all_genres(movies))))
+
+
+if __name__ == "__main__":
+    build_report(movies)
